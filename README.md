@@ -5,8 +5,9 @@ A collection of my own implementations of fundamental data structures such as ve
 ---
 
 ## 🚀 Features
-- `Vector` — dynamic array implementation (similar to `std::vector`)
-- Planned: `Map`, `Set`, `Queue`, `Stack`, `LinkedList`, `Tree`, `HashMap`
+- `Vector`
+- `Queue`
+- Planned: `Map`, `Set`, `Stack`, `LinkedList`, `Tree`, `HashMap`
 
 ---
 
