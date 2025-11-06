@@ -1,10 +1,11 @@
 #include "vector.h"
 
 template<typename T>
-vector<T>::vector(){
+vector<T>::vector()
+{
     capacity = 5;
-    count = 0;
     arr = new T[capacity];
+    count = 0;
 }
 
 template <typename T>
@@ -14,7 +15,7 @@ vector<T>::~vector()
 }
 
 template <typename T>
-void vector<T>::push_back(const T& value)
+void vector<T>::isFull()
 {
     if(count == capacity)
     {
@@ -25,25 +26,34 @@ void vector<T>::push_back(const T& value)
         delete[] arr;
         arr = temp;
     }
-    arr[count++] = value;
 }
 
 template <typename T>
-void vector<T>::pop_back()
+void vector<T>::isToBig()
 {
-    if(count == 0) return;
-
-    count --;
-
-    if(count > 0 && count <= capacity / 4)
+    if(count <= capacity / 4 && capacity > 5)
     {
-        capacity /= 4;
+        capacity /= 2;
         T* temp = new T[capacity];
         for(std::size_t i = 0; i < count; i++)
             temp[i] = arr[i];
         delete[] arr;
         arr = temp;
     }
+}
+
+template <typename T>
+void vector<T>::push_back(const T &value)
+{
+    isFull();
+    arr[count++] = value;
+}
+
+template <typename T>
+void vector<T>::pop_back()
+{
+    count--;
+    isToBig();
 }
 
 template <typename T>
@@ -52,25 +62,13 @@ void vector<T>::erase(const std::size_t index)
     for(std::size_t i = index; i < count - 1; i++)
         arr[i] = arr[i + 1];
     count--;
-    if(count > 0 && count <= capacity / 4)
-    {
-        capacity /= 4;
-        T* temp = new T[capacity];
-        for(std::size_t i = 0; i < count; i++)
-            temp[i] = arr[i];
-        delete[] arr;
-        arr = temp;
-    }
+
+    isToBig();
 }
 
 template <typename T>
-bool vector<T>::empty()
+void vector<T>::shrinkToFit()
 {
-    return count == 0;
-}
-
-template <typename T>
-void vector<T>::shrink_to_fit()
-{
-    capacity = count;
+    if(capacity == count) return;
+    capacity = count > 0 ? count : 1;
 }
